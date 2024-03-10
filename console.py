@@ -14,8 +14,9 @@ class HBNBCommand(cmd.Cmd):
         '''Exits the program'''
         return True
 
-    def do_emptyline(self):
+    def emptyline(self):
         '''Passes an empty line and doesn't do anything'''
         pass
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

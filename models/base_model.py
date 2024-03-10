@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 import models
 
-class BaseModel():
+class BaseModel:
     '''Defines the basemodel'''
 
     def __init__(self, *args, **kwargs):
@@ -24,8 +24,8 @@ class BaseModel():
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         '''string that defines the object
@@ -47,8 +47,8 @@ class BaseModel():
         Returns:
             dict: dictionary instance of __dict__
         '''
-        dictionary = self.__dict__.copy
-        dictionary['__class__'] = self.__class__.name
+        dictionary = self.__dict__.copy()
+        dictionary['__class__'] = self.__class__.__name__
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
 
