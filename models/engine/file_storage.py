@@ -29,14 +29,14 @@ class FileStorage:
         Args:
             obj: the value
         '''
-        key = f'{obj.__class__.__name__}.{obj.id}'
+        key = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
         '''Serializes __objects to the JSON file'''
         obj_dict = {}
         for key, value in self.__objects.items():
-            obj.dict[key] = value.to_dict()
+            obj_dict[key] = value.to_dict()
 
         with open(self.__file_path, 'w', encoding='utf-8') as objfile:
             json.dump(obj_dict, objfile)
