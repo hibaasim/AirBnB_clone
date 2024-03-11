@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 '''Module for the base model'''
 from datetime import datetime
 import uuid
