@@ -13,8 +13,8 @@ class FileStorage:
         __objects: dictionary
     '''
 
-    __file_path: 'file.json'
-    __objects: {}
+    __file_path = 'file.json'
+    __objects = {}
 
     def all(self):
         '''Returns the dictionary __objects
