@@ -2,7 +2,8 @@
 '''Module for the base model'''
 from datetime import datetime
 import uuid
-import models
+from models import storage
+
 
 class BaseModel:
     '''Defines the basemodel'''
@@ -27,19 +28,21 @@ class BaseModel:
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
 
+        storage.new(self)
+
     def __str__(self):
         '''string that defines the object
 
         Returns:
             str : string representation
         '''
-
         return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
 
     def save(self):
         '''Updates the date
         '''
         self.updated_at = datetime.utcnow()
+        storage.save()
 
     def to_dict(self):
         '''Creates a dictionary
