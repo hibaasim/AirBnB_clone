@@ -49,12 +49,10 @@ class FileStorage:
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as objfile:
                 obj_dict = json.load(objfile)
+                for key, value in obj_dict.items():
+                    class_name, obj_id = key.split('.')
+                    objct = eval(class_name)
+                    instance = objct(**value)
+                    self.__objects[key] = instance
         except FileNotFoundError:
             pass
-
-        for key, value in obj_dict.items():
-            class_name, obj_id = key.split('.')
-            objct = eval(class_name)
-            instance = objct(**val)
-            self.__objects[key] = instance
-
