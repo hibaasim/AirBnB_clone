@@ -4,6 +4,7 @@ import cmd
 import shlex
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -34,11 +35,11 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             print('** class name missing **')
-        elif argument[0] != 'BaseModel':
+        elif argument[0] != 'BaseModel' and argument[0] != 'User':
             print("** class doesn't exist **")
         else:
-            new_inst = BaseModel()
-            new_inst.save()
+            new_inst = eval(f'{argument[0]}()')
+            storage.save()
             print(new_inst.id)
 
     def do_show(self, args):
@@ -129,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                     attr_val = eval(attr_val)
                 except Exception:
                     pass
-                steattr(obj, attr_name, attr_val)
+                setattr(obj, attr_name, attr_val)
                 obj.save()
 
 
