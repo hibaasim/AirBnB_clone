@@ -1,33 +1,33 @@
 #!/usr/bin/python3
-'''Module for file storage'''
-from models.base_model import BaseModel
+'''Module for JSON conversion'''
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
-    '''Defines a JSON serialization and Deserialization process
+    '''Defines the file storage units
 
     Attributes:
         __file_path: string - path to the JSON file
-        __objects: dictionary - empty
+        __objects: dictionary
     '''
 
     __file_path = 'file.json'
     __objects = {}
 
     def all(self):
-        '''Returns __objects
+        '''Returns the dictionary __objects
 
         Returns:
-            dict: the dictionary __objects
+            dict: the __objects dictionary
         '''
         return self.__objects
 
     def new(self, obj):
-        '''Sets the key of the dictionary
+        '''Sets in __objects the obj with key <obj class name>.id
 
         Args:
-            obj: the object class name
+            obj: the value
         '''
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
@@ -37,15 +37,17 @@ class FileStorage:
         obj_dict = {}
         for key, value in self.__objects.items():
             obj_dict[key] = value.to_dict()
-             
-        with open(self.__file_path, 'w', encoding='utf-8') as obj_file:
-            json.dump(obj_dict, obj_file)
+
+        with open(self.__file_path, 'w', encoding='utf-8') as objfile:
+            json.dump(obj_dict, objfile)
 
     def reload(self):
-        '''Deserializes the JSON file to __objects'''
+        '''Deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists
+        '''
         try:
-            with open(self.__file_path, 'r', encoding='utf-8') as obj_file:
-                obj_dict = json.load(obj_file)
+            with open(self.__file_path, 'r', encoding='utf-8') as objfile:
+                obj_dict = json.load(objfile)
                 for key, value in obj_dict.items():
                     class_name, obj_id = key.split('.')
                     objct = eval(class_name)
@@ -53,4 +55,3 @@ class FileStorage:
                     self.__objects[key] = instance
         except FileNotFoundError:
             pass
-
