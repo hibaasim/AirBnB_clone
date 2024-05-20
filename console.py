@@ -4,14 +4,17 @@ import cmd
 import shlex
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     '''Defines the console
 
-    Args
+    Attributes:
         prompt: the prompt to be displayed
+        argument_list: list of all possible classes
     '''
     prompt = '(hbnb) '
+    argument_list = ['BaseModel', 'User']
 
     def do_quit(self, args):
         '''Exits the console'''
@@ -31,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             print('** class name missing **')
-        elif argument[0] != 'BaseModel':
+        elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         else:
             new_inst = eval(f'{argument[0]}()')
@@ -44,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             print('** class name missing **')
-        elif argument[0] != 'BaseModel':
+        elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         elif len(argument) < 2:
             print('** instance id missing **')
@@ -63,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             print('** class name missing **')
-        elif argument[0] != 'BaseModel':
+        elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         elif len(argument) < 2:
             print('** instance id missing **')
@@ -82,16 +85,18 @@ class HBNBCommand(cmd.Cmd):
         '''Prints all string representation of all instances'''
         instance = storage.all()
         argument = shlex.split(args)
+        listed = []
 
         if len(argument) == 0:
             for key, value in instance.items():
-                print(str(value))
-        elif argument[0] != 'BaseModel':
+                    listed.append(str(value))
+        elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         else:
             for key, value in instance.items():
                 if key.split('.')[0] == argument[0]:
-                    print(str(value))
+                    listed.append(str(value))
+        print(listed)
 
     def do_update(self, args):
         '''Updates an instance based on the class name and id
@@ -103,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             print('** class name missing **')
-        elif argument[0] != 'BaseModel':
+        elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         elif len(argument) < 2:
             print('** instance id missing **')
