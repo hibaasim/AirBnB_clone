@@ -51,13 +51,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             instance = storage.all()
 
-        key = f'{argument[0]}.{argument[1]}'
-        if key in instance:
-            print(instance[key])
-        else:
-            print('** no instance found **')
+            key = f'{argument[0]}.{argument[1]}'
+            if key in instance:
+                print(instance[key])
+            else:
+                print('** no instance found **')
 
-    def do_destroy(self args):
+    def do_destroy(self, args):
         ''' Deletes an instance based on the class name and id'''
         argument = shlex.split(args)
 
@@ -78,22 +78,7 @@ class HBNBCommand(cmd.Cmd):
             print('** no instance found **')
 
 
-     def do_all(self, args):
-        '''Prints all string representation of all instances'''
-        instance = storage.all()
-        argument = shlex.split(args)
-
-        if len(argument) == 0:
-            for key, value in instance.items():
-                print(str(value))
-        elif argument[0] != 'BaseModel':
-            print("** class doesn't exist **")
-        else:
-            for key, value in instance.items():
-                if key.split('.')[0] == argument[0]:
-                    print(str(value))
-
-    def do_update(self, args) def do_all(self, args):
+    def do_all(self, args):
         '''Prints all string representation of all instances'''
         instance = storage.all()
         argument = shlex.split(args)
