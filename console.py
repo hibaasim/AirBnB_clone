@@ -20,7 +20,8 @@ class HBNBCommand(cmd.Cmd):
         argument_list: list of all possible classes
     '''
     prompt = '(hbnb) '
-    argument_list = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+    argument_list = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
+                     'Review']
 
     def do_quit(self, args):
         '''Exits the console'''
@@ -86,7 +87,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print('** no instance found **')
 
-
     def do_all(self, args):
         '''Prints all string representation of all instances'''
         instance = storage.all()
@@ -95,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument) == 0:
             for key, value in instance.items():
-                    listed.append(str(value))
+                listed.append(str(value))
         elif argument[0] not in self.argument_list:
             print("** class doesn't exist **")
         else:

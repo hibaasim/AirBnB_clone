@@ -55,4 +55,3 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
 
         return dictionary
-
